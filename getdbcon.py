@@ -1,22 +1,12 @@
 #creaete a mysql connection to the database
 import mysql.connector
 from mysql.connector import errorcode
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-
-user = os.getenv("DB_USER")
-password = os.getenv("SECRET_KEY")
-host = os.getenv("HOST")
-
-
-#this function gets the database connection
 
 
 def getdbcon():
     try:
-        cnx = mysql.connector.connect(user=user, password=password, host=host)
+        cnx = mysql.connector.connect(user='SOMEUSER', password='SOMEPASSWORD', host='.azure.com')
         return cnx
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
