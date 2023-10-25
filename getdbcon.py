@@ -17,7 +17,6 @@ host = os.getenv("HOST")
 def getdbcon():
     try:
         cnx = mysql.connector.connect(user=user, password=password, host=host)
-        print("Connection to the database successful")
         return cnx
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
