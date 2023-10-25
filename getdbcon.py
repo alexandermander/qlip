@@ -29,7 +29,6 @@ def getdbcon():
 
 def closecnx(cnx):
     cnx.close()
-    print("Connection closed")
 
 #create a select statement
 def select(cnx):
@@ -49,7 +48,6 @@ def insert(cnx, content):
     query = ("INSERT INTO pastetb (paste) VALUES (%s)")
     cursor.execute(query, (content,))
     cnx.commit()
-    print("qclip saved to the cloud")
     cursor.close()
 #this get the lates clipboard content from the database "SELECT * FROM pastetb WHERE id = (SELECT MAX(id) FROM pastetb);"
 def getlatest(cnx):
@@ -58,7 +56,6 @@ def getlatest(cnx):
     query = ("SELECT * FROM pastetb WHERE id = (SELECT MAX(id) FROM pastetb);")
     cursor.execute(query)
     for (col1, col2) in cursor:
-        print("{}".format(col2))
         return col2
 
 def showtabel(cnx):
