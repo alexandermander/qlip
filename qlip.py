@@ -1,7 +1,4 @@
 #get argument from command line
-import sys
-import pyautogui
-import os
 import getdbcon
 import argparse
 import pyperclip
@@ -36,8 +33,6 @@ if args.paste:
     getdbcon.closecnx(cnx)
     #paste the content
     #smiolate a left mouse click
-    pyautogui.click()
-    pyautogui.hotkey('ctrl', 'v')
 
 if args.tabel:
     #get the database connection
