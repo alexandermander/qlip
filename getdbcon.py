@@ -6,7 +6,7 @@ from mysql.connector import errorcode
 
 def getdbcon():
     try:
-        cnx = mysql.connector.connect(user='SOMEUSER', password='SOMEPASSWORD', host='.azure.com')
+        cnx = mysql.connector.connect(user='', password='', host='')
         return cnx
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -44,16 +44,34 @@ def getlatest(cnx):
     cursor = cnx.cursor()
     query = ("SELECT * FROM pastetb WHERE id = (SELECT MAX(id) FROM pastetb);")
     cursor.execute(query)
-    for (col1, col2) in cursor:
+    for (col1, col2, col3) in cursor:
         return col2
+
+def getpastebykey(cnx, key):
+    cnx.database = 'qclip'
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM pastetb WHERE short_key = %s")
+    cursor.execute(query, (key,))
+    for (col1, col2, col3) in cursor:
+        print("{}".format(col2))
+        return col2
+    cursor.close()
 
 def showtabel(cnx):
     cnx.database = 'qclip'
     cursor = cnx.cursor()
     query = ("SELECT * FROM pastetb")
     cursor.execute(query)
-    for (col1, col2) in cursor:
+    for (col1, col2, col3) in cursor:
         print("{}".format(col2))
     cursor.close()
 
+def insert_key_and_paste(cnx, content, key):
+    cnx.database = 'qclip'
+    cursor = cnx.cursor()
+    query = ("INSERT INTO pastetb (paste, short_key) VALUES (%s, %s)")
+    values = (content, key)
+    cursor.execute(query, values)
+    cnx.commit()
+    cursor.close()
 
