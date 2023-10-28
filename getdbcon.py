@@ -6,7 +6,7 @@ from mysql.connector import errorcode
 
 def getdbcon():
     try:
-        cnx = mysql.connector.connect(user='', password='', host='')
+        cnx = mysql.connector.connect(user='', password='', host='azure.com')
         return cnx
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
