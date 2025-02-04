@@ -7,6 +7,7 @@ import (
     "net/http"
     "sync"
     "time"
+	"html"
 	"qlip/util"
 )
 
@@ -92,8 +93,8 @@ func main() {
         data := globalStore.buffer
         globalStore.mu.Unlock()
 
-        //fmt.Fprintf(w,"\n", data)
-		w.Write([]byte(data))
+		safeData := html.EscapeString(data)
+		w.Write([]byte(safeData))
     })
 
     log.Fatal(http.ListenAndServe(":8080", nil))
