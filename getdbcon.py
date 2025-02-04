@@ -2,8 +2,6 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-
-
 def getdbcon():
     try:
         cnx = mysql.connector.connect(user='', password='', host='azure.com')
