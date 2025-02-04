@@ -17,6 +17,7 @@ type store struct {
 }
 
 var globalStore = store{
+	buffer:   "Hello, Master",
     validOTPs: make(map[string]bool),
 }
 
@@ -91,7 +92,8 @@ func main() {
         data := globalStore.buffer
         globalStore.mu.Unlock()
 
-        fmt.Fprintf(w,"\n", data)
+        //fmt.Fprintf(w,"\n", data)
+		w.Write([]byte(data))
     })
 
     log.Fatal(http.ListenAndServe(":8080", nil))
