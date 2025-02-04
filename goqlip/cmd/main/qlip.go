@@ -15,6 +15,6 @@ func main() {
 	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, World!")
 	})
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":443", nil)
 }
 
