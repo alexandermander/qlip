@@ -7,7 +7,7 @@ import (
     "net/http"
     "sync"
     "time"
-	"html"
+	//"html"
 	"qlip/util"
 )
 
@@ -18,7 +18,7 @@ type store struct {
 }
 
 var globalStore = store{
-	buffer:   "<textarea style='width: 100%; height: 100%; font-size: 2em;'></textarea>",
+	buffer:   "<textarea style='width: 80%; height: 100%; font-size: 2em;'></textarea>",
     validOTPs: make(map[string]bool),
 }
 
@@ -93,8 +93,8 @@ func main() {
         data := globalStore.buffer
         globalStore.mu.Unlock()
 
-		safeData := html.EscapeString(data)
-		w.Write([]byte(safeData))
+		//safeData := html.EscapeString(data)
+		w.Write([]byte(data))
     })
 
     log.Fatal(http.ListenAndServe(":8080", nil))
