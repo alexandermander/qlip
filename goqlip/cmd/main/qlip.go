@@ -18,7 +18,7 @@ type store struct {
 }
 
 var globalStore = store{
-	buffer:   "Hello, Master",
+	buffer:   "<textarea style='width: 100%; height: 100%; font-size: 2em;'></textarea>",
     validOTPs: make(map[string]bool),
 }
 
