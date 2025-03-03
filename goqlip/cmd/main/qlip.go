@@ -18,7 +18,8 @@ type store struct {
 }
 
 var globalStore = store{
-	buffer:   "<textarea style='width: 80%; height: 100%; font-size: 2em; justify-content: center; align-items: center; display: flex; margin: 0 auto;'>" + "No data available" + "</textarea>",
+	// make the body this collor and the textarea this collor: #121212
+	buffer:   "<body style='background-color: #121212;'><textarea style='width: 90%; height: 100%; font-size: 2em; justify-content: center; align-items: center; background-color: #121212; color: white; display: flex; margin: 0 auto;'></textarea></body>",
     validOTPs: make(map[string]bool),
 }
 
@@ -28,6 +29,26 @@ func main() {
 		fmt.Println("Error loading environment variables")
 		return
 	}
+
+	// creaet a simple html template
+	http.HandleFunc("/stactik", func(w http.ResponseWriter, r *http.Request) {
+		tmpl := template.Must(template.New("qlip").Parse(`<!DOCTYPE html>
+		<html>
+		<head>
+			<title>Qlip</title>
+			<style>
+				textarea {
+					width: 80%;
+					height: 100%;
+
+	
+
+
+
+
+
+
+
 
     http.HandleFunc("/getotp", func(w http.ResponseWriter, r *http.Request) {
         pass := r.URL.Query()
@@ -99,6 +120,9 @@ func main() {
 
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
+
+
+
 
 // randomOTP generates an alphanumeric code of length n
 func randomOTP(n int) string {
