@@ -30,26 +30,6 @@ func main() {
 		return
 	}
 
-	// creaet a simple html template
-	http.HandleFunc("/stactik", func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.New("qlip").Parse(`<!DOCTYPE html>
-		<html>
-		<head>
-			<title>Qlip</title>
-			<style>
-				textarea {
-					width: 80%;
-					height: 100%;
-
-	
-
-
-
-
-
-
-
-
     http.HandleFunc("/getotp", func(w http.ResponseWriter, r *http.Request) {
         pass := r.URL.Query()
 		userAuth := false
