@@ -18,7 +18,7 @@ type store struct {
 }
 
 var globalStore = store{
-	buffer:   "<textarea style='width: 80%; height: 100%; font-size: 2em;'></textarea>",
+	buffer:   "<textarea style='width: 80%; height: 100%; font-size: 2em; justify-content: center; align-items: center; display: flex; margin: 0 auto;'>" + "No data available" + "</textarea>",
     validOTPs: make(map[string]bool),
 }
 
@@ -93,7 +93,7 @@ func main() {
         data := globalStore.buffer
         globalStore.mu.Unlock()
 
-		//safeData := html.EscapeString(data)
+		w.Header().Set("Content-Type", "text/html") // Ensure HTML rendering
 		w.Write([]byte(data))
     })
 
