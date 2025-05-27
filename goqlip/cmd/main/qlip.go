@@ -19,7 +19,7 @@ type store struct {
 
 var globalStore = store{
 	// make the body this collor and the textarea this collor: #121212
-	buffer:   "<body style='background-color: #121212;'><textarea style='width: 90%; height: 100%; font-size: 2em; justify-content: center; align-items: center; background-color: #121212; color: white; display: flex; margin: 0 auto;'></textarea></body>",
+	buffer:   "",
     validOTPs: make(map[string]bool),
 }
 
@@ -98,6 +98,10 @@ func main() {
 		w.Write([]byte(data))
     })
 
+
+	http.Handle("/paste/", http.StripPrefix("/paste/", http.FileServer(http.Dir("static"))))
+
+	fmt.Println("Server is running on port http://localhost:8080")
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
