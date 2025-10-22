@@ -30,6 +30,12 @@ func main() {
 		return
 	}
 
+
+	//make a post request handler for /set that sets the globalStore.buffer to the value of the "qlip" parameter
+
+
+
+
     http.HandleFunc("/getotp", func(w http.ResponseWriter, r *http.Request) {
         pass := r.URL.Query()
 		userAuth := false
@@ -57,6 +63,32 @@ func main() {
 		someData += copyPart
 		fmt.Fprintln(w, someData)
     })
+
+	// mkaie a post http hander called testpost
+	http.HandleFunc("/testpost", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+			return
+		}
+		r.ParseForm()
+		qlip := r.FormValue("qlip")
+		otp := r.FormValue("otp")
+		if qlip == "" || otp == "" {
+			http.Error(w, "Missing qlip or otp param", http.StatusBadRequest)
+			return
+		}
+		globalStore.mu.Lock()
+		_, exists := globalStore.validOTPs[otp]
+		if !exists {
+			globalStore.mu.Unlock()
+			http.Error(w, "Invalid or used OTP", http.StatusUnauthorized)
+			return
+		}
+		delete(globalStore.validOTPs, otp)
+		globalStore.buffer = qlip 
+		globalStore.mu.Unlock()
+		fmt.Fprintln(w, "Data stored successfully via POST!")
+	})
 
     http.HandleFunc("/set", func(w http.ResponseWriter, r *http.Request) {
         qlip := r.URL.Query().Get("qlip")
