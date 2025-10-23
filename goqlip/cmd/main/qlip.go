@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
     "log"
     "math/rand"
@@ -18,10 +19,15 @@ type store struct {
 }
 
 var globalStore = store{
-	// make the body this collor and the textarea this collor: #121212
 	buffer:   "",
     validOTPs: make(map[string]bool),
 }
+
+type PostData struct {
+	Qlip string `json:"qlip"`
+	Otp  string `json:"otp"`
+}
+
 
 func main() {
 	masertKey := util.GetEnvCloud("MASTERKEY")
@@ -29,10 +35,6 @@ func main() {
 		fmt.Println("Error loading environment variables")
 		return
 	}
-
-
-	//make a post request handler for /set that sets the globalStore.buffer to the value of the "qlip" parameter
-
 
 
 
@@ -70,9 +72,19 @@ func main() {
 			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 			return
 		}
-		r.ParseForm()
-		qlip := r.FormValue("qlip")
-		otp := r.FormValue("otp")
+
+		// get the qlip and otp params json body
+		// get json body
+		var postData PostData 
+		err := json.NewDecoder(r.Body).Decode(&postData)
+		if err != nil {
+			http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+			return
+		}
+
+		qlip := postData.Qlip 
+		otp := postData.Otp 
+
 		if qlip == "" || otp == "" {
 			http.Error(w, "Missing qlip or otp param", http.StatusBadRequest)
 			return
