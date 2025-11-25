@@ -24,11 +24,9 @@ var rootCmd = &cobra.Command{
 		if downloadString != "" {
 			download.DownloadHandler(downloadString)
 		} 
-
 		if upload != "" {
 			uploadhandler.UploadToService(upload)
 		}
-
 		if qlipbord {
 			fmt.Println("To doo")
 		}
