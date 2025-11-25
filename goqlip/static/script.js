@@ -2,6 +2,8 @@
 //
 //butten myButton
 
+const synth = window.speechSynthesis;
+
 document.getElementById("myButton").addEventListener("click", function() {
 	// get the text in the "myText" id
 	
@@ -27,3 +29,18 @@ document.getElementById("myButton").addEventListener("click", function() {
 	document.getElementById("myText").value = joinedText;
 
 });
+
+let voices = []
+
+function populateVoiceList() {
+  voices = synth.getVoices() 
+
+  for (let i = 0; i < voices.length; i++) {
+	console.log(voices[i])
+  }
+}
+
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+

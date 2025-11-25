@@ -1,16 +1,28 @@
 package otp
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"regexp"
+	"strings"
 )
 
 func GetOTP() (string, error) {
-	resp, err := http.Get("https://qlip.alexandermander.dk/getotp?QQ1122ww")
+	fmt.Println("OTP Password:")
+	reader := bufio.NewReader(os.Stdin)
+	line, err := reader.ReadString('\n')
+    if err != nil {
+        return "", err
+    }
+
+	line = strings.TrimSpace(line)
+
+	resp, err := http.Get("https://qlip.alexandermander.dk/getotp?" + line)
 	if err != nil {
-		return "", err
+		panic(err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
