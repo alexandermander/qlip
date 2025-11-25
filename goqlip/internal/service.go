@@ -18,7 +18,6 @@ var globalStore = store{}
 
 // Your "secret" pass (for demonstration only).
 // In production, this shouldn't be hardcoded (e.g. read from env variables).
-const secretPass = "QQ1122ww"
 
 func main() {
     // For demonstration, log that the server has started
